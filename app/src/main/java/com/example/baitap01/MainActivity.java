@@ -2,6 +2,7 @@ package com.example.baitap01;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -17,21 +18,32 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
-
     private EditText inputEditText;
     private Button processButton;
     private TextView resultTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        // thiết lập giao diện
         setContentView(R.layout.activity_main);
+
+        //ánh xạ các view
+        inputEditText = findViewById(R.id.inputEditText);
+        processButton = findViewById(R.id.processButton);
+        resultTextView = findViewById(R.id.resultTextView);
+
+        // xử lí khi người dùng nhấn nút
+        processButton.setOnClickListener(v -> processString());
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
         processArray();
+
     }
     private void processArray() {
         Random random = new Random();
@@ -90,4 +102,5 @@ public class MainActivity extends AppCompatActivity {
         // Trả về chuỗi đảo ngược
         return reversedString.toString().trim();
     }
+
 }
